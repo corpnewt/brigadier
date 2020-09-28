@@ -1,4 +1,4 @@
-import os,sys,subprocess,re,tempfile,shutil,optparse,datetime,platform,plistlib
+import os,sys,subprocess,re,tempfile,shutil,optparse,datetime,platform,plistlib, gzip
 if sys.version_info >= (3,0):
     from urllib.request import urlopen, urlretrieve, Request
 else:
@@ -257,6 +257,9 @@ according to the post date.")
             if 'English' in list(bc_prod[1]['Distributions']):
                 disturl = bc_prod[1]['Distributions']['English']
                 dist_data = urlopen(disturl).read()
+                temp_data = gzip.decompress(dist_data) # Decompress data if it is zipped
+                if len(temp_data) > 0:
+                    dist_data = temp_data
                 dist_data = dist_data.decode("utf-8") if sys.version_info >= (3,0) else dist_data
                 if opts.latest_version or re.search(model, dist_data):
                     supported_models = []
