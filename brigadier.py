@@ -112,7 +112,7 @@ def sevenzipExtract(arcfile, command='e', out_dir=None):
 def postInstallConfig():
     regdata = """Windows Registry Editor Version 5.00
 
-[HKEY_CURRENT_USER\Software\Apple Inc.\Apple Keyboard Support]
+[HKEY_CURRENT_USER\\Software\\Apple Inc.\\Apple Keyboard Support]
 "FirstTimeRun"=dword:00000000"""
     handle, path = tempfile.mkstemp()
     fd = os.fdopen(handle, 'w')
@@ -243,7 +243,7 @@ according to the post date.")
                     bc_prods.append((prod_id, prod_data))
         # Find the ESD(s) that applies to our model
         pkg_data = []
-        re_model = "([a-zA-Z]{4,12}[1-9]{1,2}\,[1-6])"
+        re_model = r"([a-zA-Z]{4,12}[1-9]{1,2}\,[1-6])"
         for bc_prod in bc_prods:
             if 'English' in list(bc_prod[1]['Distributions']):
                 disturl = bc_prod[1]['Distributions']['English']
